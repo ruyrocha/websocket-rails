@@ -136,6 +136,18 @@ module WebsocketRails
             subject.subscribers.count.should == 1
           end
         end
+
+        context "when it's a private channel already" do
+          before do
+            subject.instance_variable_set :@private, true
+          end
+
+          it "leaves existing subscribers on channel" do
+            subject.subscribers.count.should == 1
+            subject.make_private
+            subject.subscribers.count.should == 1
+          end
+        end
       end
 
       describe "#is_private?" do
